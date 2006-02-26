@@ -1,0 +1,11 @@
+Changes
+Makefile.PL
+MANIFEST
+README
+t/basic.t
+UUID.h
+UUID.pm
+UUID.xs
+md5.c
+md5.h
+typemap

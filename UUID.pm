@@ -1,5 +1,7 @@
 package Data::UUID;
 
+use strict;
+
 use Carp;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK);
 

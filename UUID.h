@@ -7,7 +7,10 @@
 #ifndef WIN32
 #include <unistd.h>
 #endif
+#ifndef _MSC_VER
+// No unistd.h in MS VC
 #include <unistd.h>
+#endif
 #include <time.h>
 #include "md5.h"
 
@@ -66,7 +69,12 @@ typedef unsigned int       unsigned32;
 typedef unsigned short     unsigned16;
 typedef unsigned char      unsigned8;
 typedef unsigned char      byte;
+#ifndef _MSC_VER
 typedef unsigned long long unsigned64_t;
+# else
+typedef unsigned __int64 unsigned64_t;
+// http://msdn2.microsoft.com/en-us/library/296az74e.aspx - Integer Limits
+#endif
 typedef unsigned64_t       perl_uuid_time_t;
 
 #if   defined __solaris__ || defined __linux__

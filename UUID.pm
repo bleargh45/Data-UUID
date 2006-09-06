@@ -19,7 +19,7 @@ require AutoLoader;
    NameSpace_URL
    NameSpace_X500
 );
-$VERSION = '0.14';
+$VERSION = '0.141';
 
 
 # Preloaded methods go here.

@@ -56,7 +56,7 @@ static void get_current_time(perl_uuid_time_t * timestamp) {
    static int         inited = 0;
 
    if (!inited) {
-      get_system_time(&time_now);
+      get_system_time(&time_last);
       uuids_this_tick = UUIDS_PER_TICK;
       inited = 1;
    };

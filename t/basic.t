@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 11;
+use Test::More tests => 56;
 
 BEGIN { use_ok('Data::UUID'); }
 
@@ -21,3 +21,15 @@ is($uuid4, $uuid5,                        "those base64 strings are equal");
 
 ok(my $uuid6 = $ug->from_b64string($uuid5), "make uuid from the base64 string");
 ok(!$ug->compare($uuid6,$uuid1),            "and it compares at equal, too");
+
+# some basic "all unique" tests
+my $HOW_MANY = 10;
+
+my @uuids;
+push @uuids, $ug->to_b64string($ug->create) for 0 .. ($HOW_MANY - 1);
+
+for my $i (0 .. ($HOW_MANY - 2)) {
+  for my $j ($i+1 .. ($HOW_MANY -1)) {
+    isnt($uuids[$i], $uuids[$j], "$uuids[$i] ne $uuids[$j]");
+  }
+}

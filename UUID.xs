@@ -65,6 +65,7 @@ static void get_current_time(perl_uuid_time_t * timestamp) {
 
       if (time_last != time_now) {
          uuids_this_tick = 0;
+         time_last = time_now;
          break;
       };
       if (uuids_this_tick < UUIDS_PER_TICK) {

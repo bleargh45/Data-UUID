@@ -1,5 +1,8 @@
 Revision history for Perl extension Data::UUID.
 
+0.145 Sun Sep 17 22:12 2006
+  - Win32 compatibility/compilation improvements (rt #21486) -- thanks MERIJNB!
+
 0.143 Sun Sep 17 22:12 2006
   - more tick-tracking fixes (rt #21486) -- thanks MERIJNB!
 

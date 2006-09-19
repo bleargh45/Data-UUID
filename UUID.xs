@@ -307,7 +307,7 @@ PPCODE:
    if ( self->state.ts == I64(0) ||
       memcmp(&(self->nodeid), &(self->state.node), sizeof(uuid_node_t)))
       clockseq = true_random();
-   else if (timestamp < self->state.ts)
+   else if (timestamp <= self->state.ts)
       clockseq++;
 
    format_uuid_v1(&uuid, clockseq, timestamp, self->nodeid);

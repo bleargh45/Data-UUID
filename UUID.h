@@ -7,10 +7,6 @@
 #ifndef WIN32
 #include <unistd.h>
 #endif
-#ifndef _MSC_VER
-// No unistd.h in MS VC
-#include <unistd.h>
-#endif
 #include <time.h>
 #include "md5.h"
 
@@ -35,9 +31,13 @@
 #else
 #  define PTR2ul(p)	INT2PTR(unsigned long,p)	
 #endif
-#if defined __cygwin__ || __mingw32__
+
+
+#if defined __cygwin__ || __mingw32__ || _WIN32
 #include <windows.h>
+#include <process.h>
 #endif
+
 #if defined __darwin__
 #include <sys/file.h>
 #endif
@@ -52,11 +52,21 @@
 
 #define UUID_STATE			".UUID_STATE"
 #define UUID_NODEID			".UUID_NODEID"
+
+#if defined __cygwin__ || __mingw32__ || _WIN32
+#define UUID_STATE_NV_STORE		_STDIR"\\"UUID_STATE
+#define UUID_NODEID_NV_STORE		_STDIR"\\"UUID_NODEID
+#else
 #define UUID_STATE_NV_STORE		_STDIR"/"UUID_STATE
 #define UUID_NODEID_NV_STORE		_STDIR"/"UUID_NODEID
+#endif
 
 #define UUIDS_PER_TICK 1024
+#if defined(_WIN32)
+#define I64(C) C##i64
+#else
 #define I64(C) C##LL
+#endif
 
 #define F_BIN 0
 #define F_STR 1
@@ -65,16 +75,27 @@
 
 #define CHECK(f1, f2) if (f1 != f2) RETVAL = f1 < f2 ? -1 : 1;
 
-typedef unsigned int       unsigned32;
-typedef unsigned short     unsigned16;
-typedef unsigned char      unsigned8;
-typedef unsigned char      byte;
-#ifndef _MSC_VER
-typedef unsigned long long unsigned64_t;
-# else
-typedef unsigned __int64 unsigned64_t;
-// http://msdn2.microsoft.com/en-us/library/296az74e.aspx - Integer Limits
+#if defined(_WIN32)
+//types not available on windows
+typedef __int64 int64_t;
+typedef unsigned __int64 uint64_t;
+typedef __int32 int32_t;
+typedef unsigned __int32 uint32_t;
+typedef __int16 int16_t;
+typedef unsigned __int16 uint16_t;
+typedef __int8 int8_t;
+typedef unsigned __int8 uint8_t;
+typedef int pid_t;
+#else //SunCC or gcc
+#include <inttypes.h>
 #endif
+
+typedef uint32_t         unsigned32;
+typedef uint16_t         unsigned16;
+typedef uint8_t          unsigned8;
+typedef uint8_t          byte;
+typedef uint64_t         unsigned64_t;
+
 typedef unsigned64_t       perl_uuid_time_t;
 
 #if   defined __solaris__ || defined __linux__

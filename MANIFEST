@@ -11,4 +11,3 @@ UUID.xs
 md5.c
 md5.h
 typemap
-t/perl-critic.t

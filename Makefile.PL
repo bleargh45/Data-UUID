@@ -43,6 +43,7 @@ WriteMakefile(
   NAME                => 'Data::UUID',
   VERSION_FROM        => 'UUID.pm', # finds $VERSION
   PREREQ_PM           => {}, # e.g., Module::Name => 1.1
+  LICENSE             => 'unknown',
   LIBS                => ['-lsocket'], # e.g., '-lm'
   DEFINE              => '', # e.g., '-DHAVE_SOMETHING'
   # Insert -I. if you add *.h files later:

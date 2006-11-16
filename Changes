@@ -1,5 +1,8 @@
 Revision history for Perl extension Data::UUID.
 
+0.148 Thu Nov 16 10:21 2006
+  - more Win32 fixes by Alexandr Ciornii
+
 0.146 Tue Nov 14 18:02 2006
   - packaging improvements
 

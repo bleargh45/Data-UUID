@@ -13,7 +13,7 @@ Revision history for Perl extension Data::UUID.
   - fix incorrect initialization of tick-tracking (rt #2481)
 
 0.141 Tue Sep  5 22:16 2006
-  - partial fix for compilation under MSVC (thanks Alex Ciornii!)
+  - partial fix for compilation under MSVC (thanks Alexandr Ciornii!)
 
 0.14 Sat Mar 18 08:40 2006
   - added use strict

@@ -37,25 +37,31 @@ use Config;
 WriteMakefile(
   ($] >= 5.005 ## Add these new keywords supported since 5.005
   ? (ABSTRACT_FROM => 'UUID.pm', # retrieve abstract from module
-     AUTHOR        => 'A. U. Thor <a.u.thor@a.galaxy.far.far.away>')
+     AUTHOR        => 'Ricardo Signes <rjbs[at]cpan.org>')
   : ()),
 
   NAME                => 'Data::UUID',
   VERSION_FROM        => 'UUID.pm', # finds $VERSION
   PREREQ_PM           => {}, # e.g., Module::Name => 1.1
   LICENSE             => 'unknown',
-  LIBS                => ['-lsocket'], # e.g., '-lm'
+  LIBS                => [], # e.g., '-lm'
+  #works without -lsocket
   DEFINE              => '', # e.g., '-DHAVE_SOMETHING'
   # Insert -I. if you add *.h files later:
   INC                 => '', # e.g., '-I/usr/include/other'
   # Un-comment this if you add C files to link with later:
   OBJECT              => '$(O_FILES)', # link all the C files too
   CONFIGURE           => sub {
-    my $d = eval { require File::Spec; File::Spec->tmpdir; } || '/var/tmp';
+    my $d;
+    if ($^O eq 'MSWin32' and -d "c:/tmp/") {
+     $d="c:/tmp";
+    } else {
+     $d=eval { require File::Spec; File::Spec->tmpdir; } || '/var/tmp';
+    }
     $d = prompt("UUID state storage", $d);
 
     my $m = '0007';
-    $m = prompt("default umask", $m);
+    $m = prompt("default umask", $m) unless $^O eq 'MSWin32';
 
     chmod(0666, sprintf("%s/%s", $d, ".UUID_NODEID"));
     chmod(0666, sprintf("%s/%s", $d, ".UUID_STATE"));

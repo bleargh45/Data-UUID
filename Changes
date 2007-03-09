@@ -1,5 +1,16 @@
 Revision history for Perl extension Data::UUID.
 
+1.148 Thu Nov 16 10:21 2006
+  - Debian has chosen to distribute their own Data::UUID, which has a different
+    interface and breaks other modules.  They also use a grossly-inflated
+    version number, which means that this version number must be inflated to
+    allow modules to rely on the CPAN Data::UUID properly.
+
+    Tests added to EXPLICITLY assert the one known difference between genuine
+    Data::UUID and Debian's ersatz version in libossp-uuid-perl.
+
+    Thanks to ADAMK for bringing this to my attention.
+
 0.148 Thu Nov 16 10:21 2006
   - more Win32 fixes by Alexandr Ciornii
 

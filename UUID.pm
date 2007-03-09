@@ -19,7 +19,7 @@ require AutoLoader;
    NameSpace_URL
    NameSpace_X500
 );
-$VERSION = '0.148';
+$VERSION = '1.148';
 
 # Preloaded methods go here.
 
@@ -176,7 +176,7 @@ The module allows exporting of several standard namespace UUIDs:
  
 =head1 AUTHOR
 
-Alexander Golomshtok<agolomsh@cpan.org>
+Alexander Golomshtok <agolomsh@cpan.org>
 
 =head1 SEE ALSO
 

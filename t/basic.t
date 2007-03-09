@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 117;
+use Test::More tests => 28;
 
 BEGIN { use_ok('Data::UUID'); }
 
@@ -26,11 +26,19 @@ ok(!$ug->compare($uuid6,$uuid1),            "and it compares at equal, too");
 # some basic "all unique" tests
 my $HOW_MANY = 15;
 
-my @uuids;
-push @uuids, $ug->to_b64string($ug->create) for 0 .. ($HOW_MANY - 1);
+my %uuids;
+$uuids{ $ug->to_b64string($ug->create) } = 1 for 1 .. ($HOW_MANY);
 
-for my $i (0 .. ($HOW_MANY - 2)) {
-  for my $j ($i+1 .. ($HOW_MANY -1)) {
-    isnt($uuids[$i], $uuids[$j], "$uuids[$i] ne $uuids[$j]");
-  }
+is(
+  scalar keys %uuids,
+  $HOW_MANY,
+  "we get all unique UUIDs",
+);
+
+for my $uuid (keys %uuids) {
+  ok(
+    index($uuid, "\n") == -1,
+    "no carriage return in base64 version",
+  );
 }
+

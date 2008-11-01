@@ -1,5 +1,8 @@
 Revision history for Perl extension Data::UUID.
 
+1.149 Sat Nov  1 12:31 2008
+  - added explicit BSD license; code is basically RFC4122 + patches
+
 1.148 Thu Nov 16 10:21 2006
   - Debian has chosen to distribute their own Data::UUID, which has a different
     interface and breaks other modules.  They also use a grossly-inflated

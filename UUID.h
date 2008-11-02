@@ -9,7 +9,6 @@
 #include <unistd.h>
 #endif
 #include <time.h>
-#include "md5.h"
 
 #if !defined INT2PTR
 #if (IVSIZE == PTRSIZE) && (UVSIZE == PTRSIZE)
@@ -151,6 +150,9 @@ static void       get_current_time(perl_uuid_time_t * timestamp);
 static unsigned16 true_random(void);
 static void       get_system_time(perl_uuid_time_t *perl_uuid_time);
 static void       get_random_info(unsigned char seed[16]);
+static SV*        MD5Init();
+static void       MD5Update(SV* ctx, SV* data);
+static void       MD5Final(unsigned char hash[16], SV* ctx);
 
 static char   *base64 = 
    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";

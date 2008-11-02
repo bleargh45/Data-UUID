@@ -129,7 +129,7 @@ static void get_system_time(perl_uuid_time_t *perl_uuid_time) {
 }
 
 static void get_random_info(unsigned char seed[16]) {
-   MD5_CTX c;
+   SV* ctx;
 #if defined __cygwin__ || defined __MINGW32__ || defined __MSWin32__
    typedef struct {
       MEMORYSTATUS  m;
@@ -149,8 +149,6 @@ static void get_random_info(unsigned char seed[16]) {
 #endif
    randomness r;
 
-   MD5Init(&c);
-
 #if defined __cygwin__ || defined __MINGW32__ || defined __MSWin32__
    GlobalMemoryStatus(&r.m);
    GetSystemInfo(&r.s);
@@ -165,8 +163,9 @@ static void get_random_info(unsigned char seed[16]) {
    gethostname(r.hostname, 256);
 #endif
 
-   MD5Update(&c, (unsigned char*)&r, sizeof(randomness));
-   MD5Final(seed, &c);
+   ctx = MD5Init();
+   MD5Update(ctx, sv_2mortal(newSVpv((unsigned char*)&r, sizeof(randomness))));
+   MD5Final(seed, ctx);
 }
 
 SV* make_ret(const perl_uuid_t u, int type) {
@@ -224,7 +223,75 @@ SV* make_ret(const perl_uuid_t u, int type) {
    }
    return sv_2mortal(newSVpv(buf,len));
 }
-      
+
+static SV* MD5Init() {
+   SV* res;
+   int rcount;
+
+   dSP;
+
+   ENTER; SAVETMPS;
+
+   PUSHMARK(SP);
+   XPUSHs(sv_2mortal(newSVpv("Digest::MD5", 0)));
+   PUTBACK;
+
+   rcount = call_method("new", G_SCALAR);
+   SPAGAIN;
+
+   if ( rcount != 1 )
+       croak("couldn't construct new Digest::MD5 object");
+
+   res = newSVsv(POPs);
+
+   PUTBACK;
+   FREETMPS;
+   LEAVE;
+
+   return res;
+};
+
+static void MD5Update( SV* ctx, SV* data ) {
+   dSP;
+   ENTER; SAVETMPS;
+
+   PUSHMARK(SP);
+   XPUSHs(ctx);
+   XPUSHs(data);
+   PUTBACK;
+
+   call_method("add", G_DISCARD);
+   SPAGAIN;
+
+   PUTBACK;
+   FREETMPS;
+   LEAVE;
+};
+
+static void MD5Final( unsigned char hash[16], SV* ctx ) {
+   int rcount;
+   char* tmp;
+   dSP;
+
+   ENTER; SAVETMPS;
+
+   PUSHMARK(SP);
+   XPUSHs(sv_2mortal(ctx));
+   PUTBACK;
+
+   rcount = call_method("digest", G_SCALAR);
+   SPAGAIN;
+
+   if ( rcount != 1 )
+       croak("Digest::MD5->digest hasn't returned a scalar");
+
+   memcpy(hash, POPpx, 16);
+
+   PUTBACK;
+   FREETMPS;
+   LEAVE;
+};
+
 MODULE = Data::UUID		PACKAGE = Data::UUID		
 
 PROTOTYPES: DISABLE
@@ -331,15 +398,15 @@ PPCODE:
 void
 create_from_name(self,nsid,name)
    uuid_context_t *self;
-   perl_uuid_t         *nsid;
-   char           *name;
+   perl_uuid_t    *nsid;
+   SV             *name;
 ALIAS:
    Data::UUID::create_from_name_bin = F_BIN
    Data::UUID::create_from_name_str = F_STR
    Data::UUID::create_from_name_hex = F_HEX
    Data::UUID::create_from_name_b64 = F_B64
 PREINIT:
-   MD5_CTX       c;
+   SV *ctx;
    unsigned char hash[16];
    perl_uuid_t        net_nsid; 
    perl_uuid_t        uuid;
@@ -349,10 +416,10 @@ PPCODE:
    net_nsid.time_mid            = htons(net_nsid.time_mid);
    net_nsid.time_hi_and_version = htons(net_nsid.time_hi_and_version);
 
-   MD5Init(&c);
-   MD5Update(&c, (unsigned char*)&net_nsid, sizeof(perl_uuid_t));
-   MD5Update(&c, (unsigned char*)name, strlen(name));
-   MD5Final(hash, &c);
+   ctx = MD5Init();
+   MD5Update(ctx, newSVpv((unsigned char*)&net_nsid, sizeof(perl_uuid_t)));
+   MD5Update(ctx, name);
+   MD5Final(hash, ctx);
 
    format_uuid_v3(&uuid, hash);
    ST(0) = make_ret(uuid, ix);

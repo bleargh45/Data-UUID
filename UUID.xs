@@ -271,6 +271,8 @@ static void MD5Update( SV* ctx, SV* data ) {
 static void MD5Final( unsigned char hash[16], SV* ctx ) {
    int rcount;
    char* tmp;
+   STRLEN len;
+   SV* retval;
    dSP;
 
    ENTER; SAVETMPS;
@@ -285,7 +287,12 @@ static void MD5Final( unsigned char hash[16], SV* ctx ) {
    if ( rcount != 1 )
        croak("Digest::MD5->digest hasn't returned a scalar");
 
-   memcpy(hash, POPpx, 16);
+   retval = POPs;
+   tmp = SvPV(retval, len);
+   if ( len != 16 )
+       croak("Digest::MD5->digest returned not 16 bytes");
+
+   memcpy(hash, tmp, len);
 
    PUTBACK;
    FREETMPS;

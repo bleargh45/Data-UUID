@@ -164,7 +164,7 @@ static void get_random_info(unsigned char seed[16]) {
 #endif
 
    ctx = MD5Init();
-   MD5Update(ctx, sv_2mortal(newSVpv((unsigned char*)&r, sizeof(randomness))));
+   MD5Update(ctx, sv_2mortal(newSVpv((char*)&r, sizeof(randomness))));
    MD5Final(seed, ctx);
 }
 
@@ -424,7 +424,7 @@ PPCODE:
    net_nsid.time_hi_and_version = htons(net_nsid.time_hi_and_version);
 
    ctx = MD5Init();
-   MD5Update(ctx, newSVpv((unsigned char*)&net_nsid, sizeof(perl_uuid_t)));
+   MD5Update(ctx, newSVpv((char*)&net_nsid, sizeof(perl_uuid_t)));
    MD5Update(ctx, name);
    MD5Final(hash, ctx);
 

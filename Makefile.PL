@@ -59,6 +59,7 @@ WriteMakefile(
      $d=eval { require File::Spec; File::Spec->tmpdir; } || '/var/tmp';
     }
     $d = prompt("UUID state storage", $d);
+    $d =~ s/\\/\\\\/g if $^O eq 'MSWin32';
 
     my $m = '0007';
     $m = prompt("default umask", $m) unless $^O eq 'MSWin32';

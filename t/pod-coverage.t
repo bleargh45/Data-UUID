@@ -1,7 +1,7 @@
 use strict;
 use Test::More;
 
-plan skip_all => "Test::Pod::Coverage 1.06 required for testing POD coverage"
+plan skip_all => "Pod coverage tests are not active. Please set \$ENV{AUTHOR_TESTING} to activate."
 	unless $ENV{AUTHOR_TESTING};
 
 eval "use Test::Pod::Coverage 1.06";

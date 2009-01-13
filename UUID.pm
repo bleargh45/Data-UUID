@@ -91,12 +91,11 @@ very extensively to uniquely identify classes, applications and components
 across network-connected systems.
 
 The algorithm for UUID generation, used by this extension, is described in the
-Internet Draft "UUIDs and GUIDs" by Paul J. Leach and Rich Salz
-(L<http://hegel.ittc.ku.edu/topics/internet/internet-drafts/draft-l/draft-leach-uuids-guids-01.txt>).
-It provides reasonably efficient and reliable framework for generating UUIDs
-and supports fairly high allocation rates -- 10 million per second per machine
--- and therefore is suitable for identifying both extremely short-lived and
-very persistent objects on a given system as well as across the network.
+Internet Draft "UUIDs and GUIDs" by Paul J. Leach and Rich Salz.  (See RFC
+4122.)  It provides reasonably efficient and reliable framework for generating
+UUIDs and supports fairly high allocation rates -- 10 million per second per
+machine -- and therefore is suitable for identifying both extremely short-lived
+and very persistent objects on a given system as well as across the network.
 
 This modules provides several methods to create a UUID:
  
@@ -181,10 +180,12 @@ Alexander Golomshtok <agolomsh@cpan.org>
 
 =head1 SEE ALSO
 
-The Internet Draft "UUIDs and GUIDs" by Paul J. Leach and Rich Salz:
-L<http://www.globecom.net/ietf/draft/draft-leach-uuids-guids-01.html>
+The Internet Draft "UUIDs and GUIDs" by Paul J. Leach and Rich Salz (RFC 4122)
+
 "Primary Key Reengineering Projects: The Problem" by Tom Johnston
 L<http://www.dmreview.com/editorial/dmreview/print_action.cfm?EdID=1866>
+
 "Primary Key Reengineering Projects: The Solution" by Tom Johnston
 L<http://www.dmreview.com/editorial/dmreview/print_action.cfm?EdID=2004>
+
 =cut

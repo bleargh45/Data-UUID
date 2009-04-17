@@ -3,7 +3,7 @@ uuid_context_t*		T_PTRUUID
 
 INPUT
 T_PTRUUID
-	if (sv_derived_from($arg, \"Data::UUID\")) {
+	if (SvROK($arg) && sv_derived_from($arg, \"Data::UUID\")) {
 	    IV tmp = SvIV((SV*)SvRV($arg));
 	    $var = INT2PTR($type,tmp);
 	}

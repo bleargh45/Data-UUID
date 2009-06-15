@@ -20,7 +20,7 @@ require Digest::MD5;
    NameSpace_URL
    NameSpace_X500
 );
-$VERSION = '1.201';
+$VERSION = '1.202';
 
 # Preloaded methods go here.
 

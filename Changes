@@ -1,5 +1,8 @@
 Revision history for Perl extension Data::UUID.
 
+1.202 Mon Jun 15 18:42:19 EDT 2009
+  - localize changes to $! (thanks, Jesse Vincent!)
+
 1.201 Sat Apr 18 14:09 2009
   - replace Data-UUID's own md5 with Digest::MD5 (thanks, RUZ!)
   - apply patch from tokuhirom to avoid segmentation violation

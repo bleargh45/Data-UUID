@@ -4,7 +4,7 @@ MANIFEST
 README
 t/basic.t
 t/from-name-collisions.t
-t//leaky_dollar_bang.t
+t/leaky_dollar_bang.t
 t/pod.t
 t/pod-coverage.t
 UUID.h

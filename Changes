@@ -1,5 +1,8 @@
 Revision history for Perl extension Data::UUID.
 
+1.203 Tue Nov  3 16:46:50 EST 2009
+  - avoid interactive configuration (thanks, DAXIM)
+
 1.202 Mon Jun 15 18:42:19 EDT 2009
   - localize changes to $! (thanks, Jesse Vincent!)
 

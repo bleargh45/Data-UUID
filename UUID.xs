@@ -454,7 +454,8 @@ ALIAS:
 PREINIT:
    perl_uuid_t         uuid;
    char          *from, *to;
-   int            i, c;
+   int            c;
+   unsigned int   i;
    unsigned char  buf[4];
 PPCODE:
    switch(ix) {

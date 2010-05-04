@@ -305,7 +305,6 @@ PROTOTYPES: DISABLE
 
 uuid_context_t*
 new(class)
-   char *class;
 PREINIT:
    FILE          *fd;
    unsigned char  seed[16];

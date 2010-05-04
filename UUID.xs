@@ -303,27 +303,6 @@ MODULE = Data::UUID		PACKAGE = Data::UUID
 
 PROTOTYPES: DISABLE
 
-void
-constant(sv,arg)
-PREINIT:
-   STRLEN  len;
-   char   *pv;
-INPUT:
-   SV   *sv
-   char *s = SvPV(sv, len);
-PPCODE:
-   pv = 0; len = sizeof(perl_uuid_t);
-   if (strEQ(s,"NameSpace_DNS"))
-      pv = (char*)&NameSpace_DNS;
-   if (strEQ(s,"NameSpace_URL"))
-      pv = (char*)&NameSpace_URL;
-   if (strEQ(s,"NameSpace_X500"))
-      pv = (char*)&NameSpace_X500;
-   if (strEQ(s,"NameSpace_OID"))
-      pv = (char*)&NameSpace_OID;
-   ST(0) = sv_2mortal(newSVpv(pv, len));
-   XSRETURN(1);
-
 uuid_context_t*
 new(class)
    char *class;
@@ -541,3 +520,13 @@ CODE:
       fclose(fd);
    };
    Safefree(self);
+
+BOOT:
+{
+  HV *stash = gv_stashpvs("Data::UUID", 0);
+  STRLEN len = sizeof(perl_uuid_t);
+  newCONSTSUB(stash, "NameSpace_DNS", newSVpv((char *)&NameSpace_DNS, len));
+  newCONSTSUB(stash, "NameSpace_URL", newSVpv((char *)&NameSpace_URL, len));
+  newCONSTSUB(stash, "NameSpace_OID", newSVpv((char *)&NameSpace_OID, len));
+  newCONSTSUB(stash, "NameSpace_X500", newSVpv((char *)&NameSpace_X500, len));
+}

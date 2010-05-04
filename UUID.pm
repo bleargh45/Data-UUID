@@ -7,7 +7,6 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK);
 
 require Exporter;
 require DynaLoader;
-require AutoLoader;
 require Digest::MD5;
 
 @ISA = qw(Exporter DynaLoader);
@@ -22,43 +21,10 @@ require Digest::MD5;
 );
 $VERSION = '1.203';
 
-# Preloaded methods go here.
-
-sub AUTOLOAD {
-
-
-    # This AUTOLOAD is used to 'autoload' constants from the constant()
-    # XS function.  If a constant is not found then control is passed
-    # to the AUTOLOAD in AutoLoader.
-    my $constname;
-    our $AUTOLOAD;
-    ($constname = $AUTOLOAD) =~ s/.*:://;
-    croak "& not defined" if $constname eq 'constant';
-    local $!;  # don't leak $! from calling code
-    my $val = constant($constname, @_ ? $_[0] : 0);
-    if ($! != 0) {
-      if ($! =~ /Invalid/ || $!{EINVAL}) {
-        $AutoLoader::AUTOLOAD = $AUTOLOAD;
-        goto &AutoLoader::AUTOLOAD;
-      } else {
-        croak "Your vendor has not defined Data::UUID macro $constname";
-      }
-    }
-    {
-      no strict 'refs';
-      # Fixed between 5.005_53 and 5.005_61
-      *$AUTOLOAD = sub { $val };
-    }
-    goto &$AUTOLOAD;
-}
-
 bootstrap Data::UUID $VERSION;
-
-# Autoload methods go after =cut, and are processed by the autosplit program.
 
 1;
 __END__
-# Below is the stub of documentation for your module. You better edit it!
 
 =head1 NAME
 

@@ -332,7 +332,7 @@ PREINIT:
    perl_uuid_time_t    timestamp;
    mode_t         mask;
 CODE:
-   Newz(0,RETVAL,1,uuid_context_t);
+   RETVAL = (uuid_context_t *)PerlMemShared_malloc(sizeof(uuid_context_t));
    if ((fd = fopen(UUID_STATE_NV_STORE, "rb"))) {
       fread(&(RETVAL->state), sizeof(uuid_state_t), 1, fd);
       fclose(fd);
@@ -565,7 +565,7 @@ CODE:
          UNLOCK(fd);
          fclose(fd);
       };
-      Safefree(self);
+      PerlMemShared_free(self);
 #if DU_THREADSAFE
    }
 #endif

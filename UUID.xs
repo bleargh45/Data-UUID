@@ -3,6 +3,27 @@
 #include "XSUB.h"
 #include "UUID.h"
 
+
+#ifdef USE_ITHREADS
+# define DU_THREADSAFE 1
+#else
+# define DU_THREADSAFE 0
+#endif
+
+#if DU_THREADSAFE
+# include "ptable.h"
+
+static ptable *instances;
+static perl_mutex instances_mutex;
+
+static void inc(pTHX_ ptable_ent *ent, void *ud) {
+    PERL_UNUSED_VAR(ud);
+    UV count = (UV)ent->val;
+    ptable_store(instances, ent->key, (void *)++count);
+}
+
+#endif
+
 static  perl_uuid_t NameSpace_DNS = { /* 6ba7b810-9dad-11d1-80b4-00c04fd430c8 */
    0x6ba7b810,
    0x9dad,
@@ -335,7 +356,10 @@ CODE:
       };
       umask(mask);
    }
-   errno = 0; 
+   errno = 0;
+   MUTEX_LOCK(&instances_mutex);
+   ptable_store(instances, RETVAL, (void *)(UV)1);
+   MUTEX_UNLOCK(&instances_mutex);
 OUTPUT:
    RETVAL
 
@@ -507,22 +531,51 @@ PPCODE:
    ST(0) = make_ret(uuid, F_BIN);
    XSRETURN(1);
 
+#if DU_THREADSAFE
+
+void
+CLONE(klass)
+CODE:
+   MUTEX_LOCK(&instances_mutex);
+   ptable_walk(instances, inc, instances);
+   MUTEX_UNLOCK(&instances_mutex);
+
+#endif
+
 void
 DESTROY(self)
    uuid_context_t *self;
 PREINIT:
+#if DU_THREADSAFE
+   UV            count;
+#endif
    FILE           *fd;
 CODE:
-   if ((fd = fopen(UUID_STATE_NV_STORE, "wb"))) {
-      LOCK(fd);
-      fwrite(&(self->state), sizeof(uuid_state_t), 1, fd);
-      UNLOCK(fd);
-      fclose(fd);
-   };
-   Safefree(self);
+#if DU_THREADSAFE
+   MUTEX_LOCK(&instances_mutex);
+   count = (UV)ptable_fetch(instances, self);
+   count--;
+   ptable_store(instances, self, (void *)count);
+   MUTEX_UNLOCK(&instances_mutex);
+   if (count == 0) {
+#endif
+      if ((fd = fopen(UUID_STATE_NV_STORE, "wb"))) {
+         LOCK(fd);
+         fwrite(&(self->state), sizeof(uuid_state_t), 1, fd);
+         UNLOCK(fd);
+         fclose(fd);
+      };
+      Safefree(self);
+#if DU_THREADSAFE
+   }
+#endif
 
 BOOT:
 {
+#if DU_THREADSAFE
+  instances = ptable_new();
+  MUTEX_INIT(&instances_mutex);
+#endif
   HV *stash = gv_stashpvs("Data::UUID", 0);
   STRLEN len = sizeof(perl_uuid_t);
   newCONSTSUB(stash, "NameSpace_DNS", newSVpv((char *)&NameSpace_DNS, len));

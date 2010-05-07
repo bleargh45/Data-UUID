@@ -1,5 +1,8 @@
 Revision history for Perl extension Data::UUID.
 
+1.210 TRIAL RELEASE 2010-05-07
+  - thread safety, added by Florian Ragwitz
+
 1.203 Tue Nov  3 16:46:50 EST 2009
   - avoid interactive configuration (thanks, DAXIM)
 

@@ -6,7 +6,7 @@ use Config;
 BEGIN {
     plan skip_all => 'Perl not compiled with useithreads'
         if !$Config{useithreads};
-    plan tests => 3;
+    plan tests => 4;
 }
 
 use threads;
@@ -24,5 +24,8 @@ my @ret = map {
 
 pass 'we survived our threads';
 
-is scalar @ret, 40, 'got as all the uuids we expected';
+is @ret, 40, 'got as all the uuids we expected';
 ok !grep({ !defined } @ret), 'uuids look sane';
+
+my %uuids = map { $_ => 1 } @ret;
+is keys %uuids, @ret, "all UUIDs are unique";

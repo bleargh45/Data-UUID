@@ -1,5 +1,8 @@
 Revision history for Perl extension Data::UUID.
 
+1.212 TRIAL RELEASE 2010-05-07
+  - fix MANIFEST (thanks for noticing, Florian Ragwitz)
+
 1.211 TRIAL RELEASE 2010-05-07
   - add a uniqueness test to threads.t (thanks, SCHWERN!)
 

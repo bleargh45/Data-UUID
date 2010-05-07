@@ -357,9 +357,11 @@ CODE:
       umask(mask);
    }
    errno = 0;
+#if DU_THREADSAFE
    MUTEX_LOCK(&instances_mutex);
    ptable_store(instances, RETVAL, (void *)(UV)1);
    MUTEX_UNLOCK(&instances_mutex);
+#endif
 OUTPUT:
    RETVAL
 

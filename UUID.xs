@@ -11,7 +11,15 @@
 #endif
 
 #if DU_THREADSAFE
+
+# define pPTBL   pTHX
+# define pPTBL_  pTHX_
+# define aPTBL   aTHX
+# define aPTBL_  aTHX_
+
 # include "ptable.h"
+
+# define ptable_store(T, K, V)  ptable_store(aTHX_ (T), (K), (V))
 
 static ptable *instances;
 static perl_mutex instances_mutex;

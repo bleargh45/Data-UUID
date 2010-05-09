@@ -1,5 +1,8 @@
 Revision history for Perl extension Data::UUID.
 
+1.213 TRIAL RELEASE 2010-05-07
+  - Pass along the interpreter to ptable_store, if needed (Florian Ragwitz)
+
 1.212 TRIAL RELEASE 2010-05-07
   - fix MANIFEST (thanks for noticing, Florian Ragwitz)
 

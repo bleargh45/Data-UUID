@@ -19,7 +19,7 @@ require Digest::MD5;
    NameSpace_URL
    NameSpace_X500
 );
-$VERSION = '1.212';
+$VERSION = '1.213';
 
 bootstrap Data::UUID $VERSION;
 

@@ -586,7 +586,7 @@ BOOT:
   instances = ptable_new();
   MUTEX_INIT(&instances_mutex);
 #endif
-  HV *stash = gv_stashpvs("Data::UUID", 0);
+  HV *stash = gv_stashpv("Data::UUID", 0);
   STRLEN len = sizeof(perl_uuid_t);
   newCONSTSUB(stash, "NameSpace_DNS", newSVpv((char *)&NameSpace_DNS, len));
   newCONSTSUB(stash, "NameSpace_URL", newSVpv((char *)&NameSpace_URL, len));

@@ -582,12 +582,12 @@ CODE:
 
 BOOT:
 {
+  HV *stash = gv_stashpv("Data::UUID", 0);
+  STRLEN len = sizeof(perl_uuid_t);
 #if DU_THREADSAFE
   instances = ptable_new();
   MUTEX_INIT(&instances_mutex);
 #endif
-  HV *stash = gv_stashpv("Data::UUID", 0);
-  STRLEN len = sizeof(perl_uuid_t);
   newCONSTSUB(stash, "NameSpace_DNS", newSVpv((char *)&NameSpace_DNS, len));
   newCONSTSUB(stash, "NameSpace_URL", newSVpv((char *)&NameSpace_URL, len));
   newCONSTSUB(stash, "NameSpace_OID", newSVpv((char *)&NameSpace_OID, len));

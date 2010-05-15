@@ -1,5 +1,8 @@
 Revision history for Perl extension Data::UUID.
 
+1.214 TRIAL RELEASE 2010-05-14
+  - Use gv_stashpv instead of gv_stashpvs (Florian Ragwitz)
+
 1.213 TRIAL RELEASE 2010-05-07
   - Pass along the interpreter to ptable_store, if needed (Florian Ragwitz)
 

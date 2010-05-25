@@ -1,5 +1,8 @@
 Revision history for Perl extension Data::UUID.
 
+1.215 2010-05-24
+  - no changes, released as non-trial
+
 1.214 TRIAL RELEASE 2010-05-14
   - Use gv_stashpv instead of gv_stashpvs (Florian Ragwitz)
 

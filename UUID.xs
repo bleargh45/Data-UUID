@@ -25,8 +25,8 @@ static ptable *instances;
 static perl_mutex instances_mutex;
 
 static void inc(pTHX_ ptable_ent *ent, void *ud) {
-    PERL_UNUSED_VAR(ud);
     UV count = (UV)ent->val;
+    PERL_UNUSED_VAR(ud);
     ptable_store(instances, ent->key, (void *)++count);
 }
 

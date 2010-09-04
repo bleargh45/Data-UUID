@@ -32,10 +32,6 @@ exist, however, it will take the locations, which the installing user
 has no write permissions to. In this case, the state information will not be
 saved, which will maximize the chances of generating duplicate UUIDs.
 
-DEPENDENCIES
-
-  No dependencies.
-
 COPYRIGHT AND LICENCE
 
 Copyright (C) 2001, Alexander Golomshtok

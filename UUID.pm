@@ -46,7 +46,7 @@ Unique Identifiers (GUIDs/UUIDs).
 
 =head1 DESCRIPTION
 
-This module provides a framework for generating UUIDs (Universally Unique
+This module provides a framework for generating v3 UUIDs (Universally Unique
 Identifiers, also known as GUIDs (Globally Unique Identifiers). A UUID is 128
 bits long, and is guaranteed to be different from all other UUIDs/GUIDs
 generated until 3400 CE.
@@ -149,11 +149,5 @@ Alexander Golomshtok <agolomsh@cpan.org>
 =head1 SEE ALSO
 
 The Internet Draft "UUIDs and GUIDs" by Paul J. Leach and Rich Salz (RFC 4122)
-
-"Primary Key Reengineering Projects: The Problem" by Tom Johnston
-L<http://www.dmreview.com/editorial/dmreview/print_action.cfm?EdID=1866>
-
-"Primary Key Reengineering Projects: The Solution" by Tom Johnston
-L<http://www.dmreview.com/editorial/dmreview/print_action.cfm?EdID=2004>
 
 =cut

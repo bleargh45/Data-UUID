@@ -1,5 +1,9 @@
 Revision history for Perl extension Data::UUID.
 
+1.217 2010-09-14
+  - documentation fixes
+  - minor portability tweak to UUID.xs (thanks, Florian Ragwitz)
+
 1.216 2010-09-04
   - documentation fixes only
 

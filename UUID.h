@@ -53,7 +53,7 @@
 
 #define UUID_STATE			".UUID_STATE"
 #define UUID_NODEID			".UUID_NODEID"
-#if defined __mingw32__ || defined _WIN32 || defined _MSC_VER
+#if defined __mingw32__ || (defined _WIN32 && !defined(__cygwin__)) || defined _MSC_VER
 #define UUID_STATE_NV_STORE		_STDIR"\\"UUID_STATE
 #define UUID_NODEID_NV_STORE		_STDIR"\\"UUID_NODEID
 #else

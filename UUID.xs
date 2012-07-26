@@ -3,6 +3,10 @@
 #include "XSUB.h"
 #include "UUID.h"
 
+#if defined __BEOS__ || defined __HAIKU__
+#  undef bool
+#  include <OS.h>
+#endif
 
 #ifdef USE_ITHREADS
 # define DU_THREADSAFE 1
@@ -171,7 +175,11 @@ static void get_random_info(unsigned char seed[16]) {
    } randomness;
 #else
    typedef struct {
+#if defined __BEOS__ || defined __HAIKU__
+      system_info    sys_info;
+#else
       long           hostid;
+#endif
       struct timeval t;
       char           hostname[257];
    } randomness;
@@ -187,7 +195,11 @@ static void get_random_info(unsigned char seed[16]) {
    r.l = MAX_COMPUTERNAME_LENGTH + 1;
    GetComputerName(r.hostname, &r.l );
 #else
+#  if defined __BEOS__ || defined __HAIKU__
+   get_system_info(&r.sys_info);
+#  else
    r.hostid = gethostid();
+#  endif
    gettimeofday(&r.t, (struct timezone *)0);
    gethostname(r.hostname, 256);
 #endif

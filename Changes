@@ -1,5 +1,8 @@
 Revision history for Perl extension Data::UUID.
 
+1.218
+  - support for Haiku OS (thanks, Tony Cook!)
+
 1.217 2010-09-14
   - documentation fixes
   - minor portability tweak to UUID.xs (thanks, Florian Ragwitz)

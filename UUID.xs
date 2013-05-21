@@ -212,15 +212,16 @@ static void get_random_info(unsigned char seed[16]) {
 }
 
 static SV* make_ret(const perl_uuid_t u, int type) {
-   char           buf[BUFSIZ];
-   unsigned char *from, *to;
-   STRLEN         len;
-   int            i;
+   char                 buf[BUFSIZ];
+   const unsigned char *from;
+   unsigned char       *to;
+   STRLEN               len;
+   int                  i;
 
    memset(buf, 0x00, BUFSIZ);
    switch(type) {
    case F_BIN:
-      memcpy(buf, (void*)&u, sizeof(perl_uuid_t));
+      memcpy(buf, &u, sizeof(perl_uuid_t));
       len = sizeof(perl_uuid_t);
       break;
    case F_STR:
@@ -238,8 +239,7 @@ static SV* make_ret(const perl_uuid_t u, int type) {
       len = strlen(buf);
       break;
    case F_B64:
-      for(from = (unsigned char*)&u, to = (unsigned char*)buf, i = sizeof(u); 
-	  i > 0; i -= 3, from += 3) {
+      for(from = (const unsigned char*)&u, to = (unsigned char*)buf, i = sizeof(u); i > 0; i -= 3, from += 3) {
          *to++ = base64[from[0]>>2];
          switch(i) {
 	 case 1:

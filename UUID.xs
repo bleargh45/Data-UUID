@@ -209,7 +209,7 @@ static void get_random_info(unsigned char seed[16]) {
    MD5Final(seed, ctx);
 }
 
-SV* make_ret(const perl_uuid_t u, int type) {
+static SV* make_ret(const perl_uuid_t u, int type) {
    char           buf[BUFSIZ];
    unsigned char *from, *to;
    STRLEN         len;

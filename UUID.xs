@@ -21,6 +21,8 @@
 # define aPTBL   aTHX
 # define aPTBL_  aTHX_
 
+# define PTABLE_VAL_FREE(V) ((void) (V))
+
 # include "ptable.h"
 
 # define ptable_store(T, K, V)  ptable_store(aTHX_ (T), (K), (V))

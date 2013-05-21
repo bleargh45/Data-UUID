@@ -155,7 +155,7 @@ static SV*        MD5Init(void);
 static void       MD5Update(SV* ctx, SV* data);
 static void       MD5Final(unsigned char hash[16], SV* ctx);
 
-static char   *base64 = 
+static const char base64[] =
    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 static unsigned char index64[256] = {

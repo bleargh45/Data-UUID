@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #ifndef _MSC_VER
-// No unistd.h in MS VC
+/* No unistd.h in MS VC */
 #include <unistd.h>
 #endif
 #include <time.h>

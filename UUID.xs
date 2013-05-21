@@ -31,7 +31,7 @@ static ptable *instances;
 static perl_mutex instances_mutex;
 
 static void inc(pTHX_ ptable_ent *ent, void *ud) {
-    UV count = (UV)ent->val;
+    UV count = PTR2UV(ent->val);
     PERL_UNUSED_VAR(ud);
     ptable_store(instances, ent->key, (void *)++count);
 }
@@ -353,6 +353,7 @@ PREINIT:
    unsigned char  seed[16];
    perl_uuid_time_t    timestamp;
    mode_t         mask;
+   UV             one = 1;
 CODE:
    RETVAL = (uuid_context_t *)PerlMemShared_malloc(sizeof(uuid_context_t));
    if ((fd = fopen(UUID_STATE_NV_STORE, "rb"))) {
@@ -381,7 +382,7 @@ CODE:
    errno = 0;
 #if DU_THREADSAFE
    MUTEX_LOCK(&instances_mutex);
-   ptable_store(instances, RETVAL, (void *)(UV)1);
+   ptable_store(instances, RETVAL, INT2PTR(void *, one));
    MUTEX_UNLOCK(&instances_mutex);
 #endif
 OUTPUT:
@@ -577,7 +578,7 @@ PREINIT:
 CODE:
 #if DU_THREADSAFE
    MUTEX_LOCK(&instances_mutex);
-   count = (UV)ptable_fetch(instances, self);
+   count = PTR2UV(ptable_fetch(instances, self));
    count--;
    ptable_store(instances, self, (void *)count);
    MUTEX_UNLOCK(&instances_mutex);

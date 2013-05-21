@@ -7,7 +7,8 @@ BEGIN {
     plan skip_all => 'Perl not compiled with useithreads'
         if !$Config{useithreads};
     plan skip_all => 'This test does not cope well with this version of perl'
-        if "$]" == 5.008_002;
+        if "$]" == 5.008_002
+        or ("$]" < 5.013_004 and not $ENV{AUTHOR_TESTING});
     plan tests => 4;
 }
 

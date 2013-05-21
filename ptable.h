@@ -9,6 +9,13 @@
 /* This header is designed to be included several times with different
  * definitions for PTABLE_NAME and PTABLE_VAL_FREE(). */
 
+#undef VOID2
+#ifdef __cplusplus
+# define VOID2(T, P) static_cast<T>(P)
+#else
+# define VOID2(T, P) (P)
+#endif
+
 #undef pPTBLMS
 #undef pPTBLMS_
 #undef aPTBLMS
@@ -22,7 +29,7 @@
 # define aPTBLMS  aTHX
 # define aPTBLMS_ aTHX_
 #else
-# define pPTBLMS
+# define pPTBLMS  void
 # define pPTBLMS_
 # define aPTBLMS
 # define aPTBLMS_
@@ -79,10 +86,11 @@ typedef struct ptable {
 #ifndef ptable_new
 STATIC ptable *ptable_new(pPTBLMS) {
 #define ptable_new() ptable_new(aPTBLMS)
- ptable *t = PerlMemShared_malloc(sizeof *t);
- t->max   = 15;
- t->items = 0;
- t->ary   = PerlMemShared_calloc(t->max + 1, sizeof *t->ary);
+ ptable *t = VOID2(ptable *, PerlMemShared_malloc(sizeof *t));
+ t->max    = 15;
+ t->items  = 0;
+ t->ary    = VOID2(ptable_ent **,
+                              PerlMemShared_calloc(t->max + 1, sizeof *t->ary));
  return t;
 }
 #endif /* !ptable_new */
@@ -125,7 +133,7 @@ STATIC void ptable_split(pPTBLMS_ ptable * const t) {
  size_t newsize = oldsize * 2;
  size_t i;
 
- ary = PerlMemShared_realloc(ary, newsize * sizeof(*ary));
+ ary = VOID2(ptable_ent **, PerlMemShared_realloc(ary, newsize * sizeof(*ary)));
  Zero(&ary[oldsize], newsize - oldsize, sizeof(*ary));
  t->max = --newsize;
  t->ary = ary;
@@ -157,7 +165,7 @@ STATIC void PTABLE_PREFIX(_store)(pPTBL_ ptable * const t, const void * const ke
   ent->val = val;
  } else if (val) {
   const size_t i = PTABLE_HASH(key) & t->max;
-  ent = PerlMemShared_malloc(sizeof *ent);
+  ent = VOID2(ptable_ent *, PerlMemShared_malloc(sizeof *ent));
   ent->key  = key;
   ent->val  = val;
   ent->next = t->ary[i];

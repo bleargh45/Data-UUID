@@ -3,23 +3,19 @@ package Data::UUID;
 use strict;
 
 use Carp;
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK);
 
 require Exporter;
 require DynaLoader;
 require Digest::MD5;
 
-@ISA = qw(Exporter DynaLoader);
-# Items to export into callers namespace by default. Note: do not export
-# names by default without a very good reason. Use EXPORT_OK instead.
-# Do not simply export all your public functions/methods/constants.
-@EXPORT = qw(
+our @ISA = qw(Exporter DynaLoader);
+our @EXPORT = qw(
    NameSpace_DNS
    NameSpace_OID
    NameSpace_URL
    NameSpace_X500
 );
-$VERSION = '1.218';
+our $VERSION = '1.218';
 
 bootstrap Data::UUID $VERSION;
 

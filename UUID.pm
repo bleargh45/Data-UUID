@@ -71,7 +71,8 @@ UUIDs and supports fairly high allocation rates -- 10 million per second per
 machine -- and therefore is suitable for identifying both extremely short-lived
 and very persistent objects on a given system as well as across the network.
 
-This modules provides several methods to create a UUID:
+This modules provides several methods to create a UUID.  In all methods, C<<
+<namespace> >> is a UUID and C<< <name> >> is a free form string.
  
    # creates binary (16 byte long binary value) UUID.
    $ug->create();

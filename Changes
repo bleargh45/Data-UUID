@@ -1,5 +1,11 @@
 Revision history for Perl extension Data::UUID.
 
+1.219     2013-07-06
+  - cygwin fixes (thanks, Reini Urban!)
+  - Skip t/threads.t unless perl version is 5.13.4 or greater (thanks, VPIT)
+  - compile with strict C89 compilers (thanks, VPIT)
+  - more bugfixes (thanks, VPIT)
+
 1.218
   - support for Haiku OS (thanks, Tony Cook!)
 

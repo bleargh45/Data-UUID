@@ -56,6 +56,13 @@ WriteMakefile(
   INC                 => '', # e.g., '-I/usr/include/other'
   # Un-comment this if you add C files to link with later:
   OBJECT              => '$(O_FILES)', # link all the C files too
+  META_MERGE => {
+    resources => {
+      bugtracker  => 'https://github.com/rjbs/Data-UUID/issues',
+      repository  => 'https://github.com/rjbs/Data-UUID',
+    },
+},
+
   CONFIGURE           => sub {
     my %opt;
     GetOptions(\%opt, 's|state-storage-directory:s', 'd|default-umask:s',

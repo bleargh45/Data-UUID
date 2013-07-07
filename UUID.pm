@@ -28,8 +28,14 @@ __END__
 
 =head1 NAME
 
-Data::UUID - Perl extension for generating Globally/Universally 
-Unique Identifiers (GUIDs/UUIDs).
+Data::UUID - Globally/Universally Unique Identifiers (GUIDs/UUIDs)
+
+=head1 SEE INSTEAD?
+
+The module L<Data::GUID> provides another interface for generating GUIDs.
+Right now, it relies on Data::UUID, but it may not in the future.  Its
+interface may be just a little more straightforward for the average Perl
+programer.
 
 =head1 SYNOPSIS
 

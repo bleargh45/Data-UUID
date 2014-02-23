@@ -199,7 +199,7 @@ static void get_random_info(unsigned char seed[16]) {
 #else
 #  if defined __BEOS__ || defined __HAIKU__
    get_system_info(&r.sys_info);
-#  else
+#  elif !defined(__ANDROID__)
    r.hostid = gethostid();
 #  endif
    gettimeofday(&r.t, (struct timezone *)0);

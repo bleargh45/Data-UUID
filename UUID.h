@@ -98,7 +98,8 @@ typedef int pid_t;
 #endif /* _MSC_VER */
 typedef unsigned64_t       perl_uuid_time_t;
 
-#if   defined __solaris__ || defined __linux__
+/* Android's lic provides neither lockf nor any of the related constants */
+#if   (defined __solaris__ || defined __linux__) && !defined(__android__)
 #     define LOCK(f)		lockf(fileno(f),F_LOCK,0);
 #     define UNLOCK(f)		lockf(fileno(f),F_ULOCK,0);
 #elif defined __darwin__

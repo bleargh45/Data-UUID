@@ -1,5 +1,8 @@
 Revision history for Perl extension Data::UUID.
 
+1.220     2014-12-15
+  - improve chances it'll work on Android (thanks, Brian Fraser)
+
 1.219     2013-07-06
   - cygwin fixes (thanks, Reini Urban!)
   - Skip t/threads.t unless perl version is 5.13.4 or greater (thanks, VPIT)

@@ -1,5 +1,8 @@
 Revision history for Perl extension Data::UUID.
 
+AS OF YET UNRELEASED
+  - exceptions are thrown when flock/lockf/fread fails
+
 1.220     2014-12-15
   - improve chances it'll work on Android (thanks, Brian Fraser)
 

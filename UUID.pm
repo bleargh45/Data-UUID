@@ -81,11 +81,13 @@ This modules provides several methods to create a UUID.  In all methods, C<<
 
    # creates UUID string, using conventional UUID string format,
    # such as: 4162F712-1DD2-11B2-B17E-C09EFE1DC403
+   # Note that digits A-F are capitalized, which is contrary to rfc4122
    $ug->create_str();
    $ug->create_from_name_str(<namespace>, <name>);
 
    # creates UUID string as a hex string,
    # such as: 0x4162F7121DD211B2B17EC09EFE1DC403
+   # Note that digits A-F are capitalized, which is contrary to rfc4122
    $ug->create_hex();
    $ug->create_from_name_hex(<namespace>, <name>);
 

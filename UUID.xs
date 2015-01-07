@@ -357,16 +357,19 @@ PREINIT:
 CODE:
    RETVAL = (uuid_context_t *)PerlMemShared_malloc(sizeof(uuid_context_t));
    if ((fd = fopen(UUID_STATE_NV_STORE, "rb"))) {
-      fread(&(RETVAL->state), sizeof(uuid_state_t), 1, fd);
+      if (! fread(&(RETVAL->state), sizeof(uuid_state_t), 1, fd)) {
+          croak("fread failed");
+      }
       fclose(fd);
       get_current_time(&timestamp);
       RETVAL->next_save = timestamp;
    }
    if ((fd = fopen(UUID_NODEID_NV_STORE, "rb"))) {
       pid_t *hate = (pid_t *) &(RETVAL->nodeid); 
-      fread(&(RETVAL->nodeid), sizeof(uuid_node_t), 1, fd );
+      if (! fread(&(RETVAL->nodeid), sizeof(uuid_node_t), 1, fd )) {
+          croak("fread failed");
+      }
       fclose(fd);
-      
       *hate += getpid();
    } else {
       get_random_info(seed);
@@ -418,9 +421,13 @@ PPCODE:
    if (timestamp > self->next_save ) {
       mask = umask(_DEFAULT_UMASK);
       if((fd = fopen(UUID_STATE_NV_STORE, "wb"))) {
-	 LOCK(fd);
+	 if (-1 == LOCK(fd)) {
+	    croak("Could not lock");
+	 }
          fwrite(&(self->state), sizeof(uuid_state_t), 1, fd);
-	 UNLOCK(fd);
+	 if (-1 == UNLOCK(fd)) {
+	    croak("Could not unlock");
+	 }
          fclose(fd);
       }
       umask(mask);
@@ -585,9 +592,15 @@ CODE:
    if (count == 0) {
 #endif
       if ((fd = fopen(UUID_STATE_NV_STORE, "wb"))) {
-         LOCK(fd);
+         if (-1 == LOCK(fd)) {
+            PerlMemShared_free(self);
+            croak("Could not lock");
+         }
          fwrite(&(self->state), sizeof(uuid_state_t), 1, fd);
-         UNLOCK(fd);
+         if (-1 == UNLOCK(fd)) {
+            PerlMemShared_free(self);
+            croak("Could not unlock");
+         }
          fclose(fd);
       };
       PerlMemShared_free(self);

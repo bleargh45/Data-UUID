@@ -100,14 +100,14 @@ typedef unsigned64_t       perl_uuid_time_t;
 
 /* Android's lic provides neither lockf nor any of the related constants */
 #if   (defined __solaris__ || defined __linux__) && !defined(__android__)
-#     define LOCK(f)		lockf(fileno(f),F_LOCK,0);
-#     define UNLOCK(f)		lockf(fileno(f),F_ULOCK,0);
+#     define LOCK(f)		lockf(fileno(f),F_LOCK,0)
+#     define UNLOCK(f)		lockf(fileno(f),F_ULOCK,0)
 #elif defined __darwin__
-#     define LOCK(f)		flock(fileno(f),LOCK_EX);
-#     define UNLOCK(f)		flock(fileno(f),LOCK_UN);
+#     define LOCK(f)		flock(fileno(f),LOCK_EX)
+#     define UNLOCK(f)		flock(fileno(f),LOCK_UN)
 #else
-#     define LOCK(f)
-#     define UNLOCK(f)
+#     define LOCK(f)		0
+#     define UNLOCK(f)		0
 #endif
 
 #undef perl_uuid_t

@@ -100,7 +100,7 @@ This modules provides several methods to create a UUID.  In all methods, C<<
    # convert to conventional string representation
    $ug->to_string(<uuid>);
 
-   # convert to hex string
+   # convert to hex string (using upper, rather than lower, case letters)
    $ug->to_hexstring(<uuid>);
 
    # convert to Base64-encoded string

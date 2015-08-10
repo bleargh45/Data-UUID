@@ -1,6 +1,6 @@
 Revision history for Perl extension Data::UUID.
 
-AS OF YET UNRELEASED
+1.221     2015-08-10
   - documentation improvements
 
 1.220     2014-12-15

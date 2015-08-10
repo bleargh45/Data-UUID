@@ -15,7 +15,7 @@ our @EXPORT = qw(
    NameSpace_URL
    NameSpace_X500
 );
-our $VERSION = '1.220';
+our $VERSION = '1.221';
 
 bootstrap Data::UUID $VERSION;
 

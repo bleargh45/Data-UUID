@@ -451,7 +451,7 @@ PPCODE:
    net_nsid.time_hi_and_version = htons(net_nsid.time_hi_and_version);
 
    ctx = MD5Init();
-   MD5Update(ctx, newSVpv((char*)&net_nsid, sizeof(perl_uuid_t)));
+   MD5Update(ctx, sv_2mortal(newSVpv((char*)&net_nsid, sizeof(perl_uuid_t))));
    MD5Update(ctx, name);
    MD5Final(hash, ctx);
 

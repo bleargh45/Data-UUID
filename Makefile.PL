@@ -39,6 +39,29 @@ use Pod::Usage qw(pod2usage);
     }
 };
 
+sub c_quote {
+    my $str = shift;
+    $str =~ s{([^\w/:_+\-\. ])}{sprintf "\\%03o", ord $1}ge;
+    qq("$str");
+}
+
+sub shell_quote {
+    my $str = shift;
+    return '""' if $str eq '';
+    if ($^O eq 'MSWin32') {
+        if ($str =~ /[ \t\n\x0b"]/) {
+            $str =~ s{(\\+)(?="|\z)}{$1$1}g;
+            $str =~ s{"}{\\"}g;
+            return qq("$str");
+        }
+        return $str;
+    }
+    else {
+        $str =~ s/'/'\\''/g;
+        return qq('$str');
+    }
+}
+
 WriteMakefile(
   ($] >= 5.005 ## Add these new keywords supported since 5.005
   ? (ABSTRACT_FROM => 'UUID.pm', # retrieve abstract from module
@@ -91,10 +114,10 @@ WriteMakefile(
     chmod(0666, sprintf("%s/%s", $d, ".UUID_NODEID"));
     chmod(0666, sprintf("%s/%s", $d, ".UUID_STATE"));
     return {
-      DEFINE => qq(-D_STDIR=\\"$d\\")
-              . qq( -D__$Config{osname}__)
-              . qq( -D_DEFAULT_UMASK=$m)
-    };
+      DEFINE => '-D_STDIR=' . shell_quote(c_quote($d))
+              . ' -D' . shell_quote("__$Config{osname}__")
+              . ' -D_DEFAULT_UMASK=' . shell_quote($m)
+           };
   }
 );
 

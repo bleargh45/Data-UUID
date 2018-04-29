@@ -1,5 +1,9 @@
 Revision history for Perl extension Data::UUID.
 
+1.222     2018-04-29 (TRIAL)
+  - Properly quote C strings passed in DEFINE (thanks, Salvador Fadiño)
+  - Fix memory leak by decreasing reference count (thanks, Daniel Spang)
+
 1.221     2015-08-10
   - documentation improvements
 

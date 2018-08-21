@@ -3,8 +3,12 @@
 #include "XSUB.h"
 #include "UUID.h"
 
-#if defined __BEOS__ || defined __HAIKU__
+#if defined __BEOS__
 #  undef bool
+#  include <OS.h>
+#endif
+
+#if defined __HAIKU__
 #  include <OS.h>
 #endif
 

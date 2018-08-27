@@ -5,6 +5,7 @@ use ExtUtils::MakeMaker;
 use Config;
 use Getopt::Long qw(GetOptions :config pass_through);
 use Pod::Usage qw(pod2usage);
+use File::Spec;
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
 
@@ -72,12 +73,7 @@ WriteMakefile(
 
     print "Configured options (run perl Makefile.PL --help for how to change this):\n";
 
-    my $d;
-    if ($^O eq 'MSWin32' and -d "c:/tmp/") {
-     $d="c:/tmp";
-    } else {
-     $d=eval { require File::Spec; File::Spec->tmpdir; } || '/var/tmp';
-    }
+    my $d = File::Spec->tmpdir;
     $d = $opt{s} || $d;
     print "\tUUID state storage: $d\n";
     $d =~ s/\\/\\\\/g if $^O eq 'MSWin32';

@@ -48,7 +48,7 @@ WriteMakefile(
   NAME                => 'Data::UUID',
   VERSION_FROM        => 'UUID.pm', # finds $VERSION
   PREREQ_PM           => { 'Digest::MD5' => '0' }, # e.g., Module::Name => 1.1
-  LICENSE             => 'bsd',
+  LICENSE             => 'mit',
   LIBS                => [], # e.g., '-lm'
   #works without -lsocket
   DEFINE              => '', # e.g., '-DHAVE_SOMETHING'

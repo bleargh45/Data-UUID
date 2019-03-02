@@ -1,5 +1,8 @@
 Revision history for Perl extension Data::UUID.
 
+1.224     2019-03-02
+  - No changes since 1.223
+
 1.223     2019-02-14 (TRIAL)
   - Use File::Spec to get tmpdir instead of hardcoding (thanks, Desmond
   Daignault)

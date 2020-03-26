@@ -575,6 +575,7 @@ PREINIT:
    UV            count;
 #endif
    FILE           *fd;
+   mode_t         mask;
 CODE:
 #if DU_THREADSAFE
    MUTEX_LOCK(&instances_mutex);
@@ -584,12 +585,14 @@ CODE:
    MUTEX_UNLOCK(&instances_mutex);
    if (count == 0) {
 #endif
+      mask = umask(_DEFAULT_UMASK);
       if ((fd = fopen(UUID_STATE_NV_STORE, "wb"))) {
          LOCK(fd);
          fwrite(&(self->state), sizeof(uuid_state_t), 1, fd);
          UNLOCK(fd);
          fclose(fd);
       };
+      umask(mask);
       PerlMemShared_free(self);
 #if DU_THREADSAFE
    }

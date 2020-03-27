@@ -106,7 +106,7 @@ This modules provides several methods to create a UUID.  In all methods, C<<
    # convert to Base64-encoded string
    $ug->to_b64string(<uuid>);
 
-   Conversly, string UUIDs can be converted back to binary form:
+   Conversely, string UUIDs can be converted back to binary form:
 
    # recreate binary UUID from string
    $ug->from_string(<uuid>);

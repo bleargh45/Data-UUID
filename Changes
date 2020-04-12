@@ -1,7 +1,10 @@
 Revision history for Perl extension Data::UUID.
 
-1.225     2020-04-12
+1.226     2020-04-12
   - set umask before fopen in destructor (thanks, Rafaël Garcia-Suarez)
+
+1.225     2020-04-12
+  - pointless accidental release
 
 1.224     2019-03-02
   - No changes since 1.223

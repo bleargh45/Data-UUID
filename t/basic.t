@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 28;
+use Test::More tests => 30;
 
 BEGIN { use_ok('Data::UUID'); }
 
@@ -42,3 +42,5 @@ for my $uuid (keys %uuids) {
   );
 }
 
+ok($ug->create_str =~ /^[0-9a-f\-]*$/, "create_str only contains lowercase hex digits or dashes");
+ok($ug->create_hex =~ /^0x[0-9a-f]*$/, "create_hex only contains lowercase hex digits");

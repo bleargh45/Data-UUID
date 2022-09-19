@@ -397,9 +397,6 @@ PPCODE:
    self->state.node = self->nodeid;
    self->state.ts   = timestamp;
    self->state.cs   = clockseq;
-   if (timestamp > self->next_save ) {
-      self->next_save = timestamp + (10 * 10 * 1000 * 1000);
-   }
    ST(0) = make_ret(uuid, ix);
    XSRETURN(1);
 

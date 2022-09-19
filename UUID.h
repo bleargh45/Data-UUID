@@ -47,9 +47,6 @@
 #if !defined _STDIR
 #    define  _STDIR			"/var/tmp"
 #endif
-#if !defined _DEFAULT_UMASK
-#    define  _DEFAULT_UMASK		0007
-#endif
 
 #define UUIDS_PER_TICK 1024
 #ifdef _MSC_VER

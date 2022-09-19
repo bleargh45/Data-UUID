@@ -356,29 +356,11 @@ PREINIT:
    UV             one = 1;
 CODE:
    RETVAL = (uuid_context_t *)PerlMemShared_malloc(sizeof(uuid_context_t));
-   if ((fd = fopen(UUID_STATE_NV_STORE, "rb"))) {
-      fread(&(RETVAL->state), sizeof(uuid_state_t), 1, fd);
-      fclose(fd);
-      get_current_time(&timestamp);
-      RETVAL->next_save = timestamp;
-   }
-   if ((fd = fopen(UUID_NODEID_NV_STORE, "rb"))) {
-      pid_t *hate = (pid_t *) &(RETVAL->nodeid); 
-      fread(&(RETVAL->nodeid), sizeof(uuid_node_t), 1, fd );
-      fclose(fd);
-      
-      *hate += getpid();
-   } else {
+
       get_random_info(seed);
       seed[0] |= 0x80;
       memcpy(&(RETVAL->nodeid), seed, sizeof(uuid_node_t));
-      mask = umask(_DEFAULT_UMASK);
-      if ((fd = fopen(UUID_NODEID_NV_STORE, "wb"))) {
-         fwrite(&(RETVAL->nodeid), sizeof(uuid_node_t), 1, fd);
-         fclose(fd);
-      };
-      umask(mask);
-   }
+
    errno = 0;
 #if DU_THREADSAFE
    MUTEX_LOCK(&instances_mutex);
@@ -416,14 +398,6 @@ PPCODE:
    self->state.ts   = timestamp;
    self->state.cs   = clockseq;
    if (timestamp > self->next_save ) {
-      mask = umask(_DEFAULT_UMASK);
-      if((fd = fopen(UUID_STATE_NV_STORE, "wb"))) {
-	 LOCK(fd);
-         fwrite(&(self->state), sizeof(uuid_state_t), 1, fd);
-	 UNLOCK(fd);
-         fclose(fd);
-      }
-      umask(mask);
       self->next_save = timestamp + (10 * 10 * 1000 * 1000);
    }
    ST(0) = make_ret(uuid, ix);
@@ -585,14 +559,6 @@ CODE:
    MUTEX_UNLOCK(&instances_mutex);
    if (count == 0) {
 #endif
-      mask = umask(_DEFAULT_UMASK);
-      if ((fd = fopen(UUID_STATE_NV_STORE, "wb"))) {
-         LOCK(fd);
-         fwrite(&(self->state), sizeof(uuid_state_t), 1, fd);
-         UNLOCK(fd);
-         fclose(fd);
-      };
-      umask(mask);
       PerlMemShared_free(self);
 #if DU_THREADSAFE
    }

@@ -44,23 +44,6 @@
 #include <process.h>
 #endif
 
-#if !defined _STDIR
-#    define  _STDIR			"/var/tmp"
-#endif
-#if !defined _DEFAULT_UMASK
-#    define  _DEFAULT_UMASK		0007
-#endif
-
-#define UUID_STATE			".UUID_STATE"
-#define UUID_NODEID			".UUID_NODEID"
-#if defined __mingw32__ || (defined _WIN32 && !defined(__cygwin__)) || defined _MSC_VER
-#define UUID_STATE_NV_STORE		_STDIR"\\"UUID_STATE
-#define UUID_NODEID_NV_STORE		_STDIR"\\"UUID_NODEID
-#else
-#define UUID_STATE_NV_STORE		_STDIR"/"UUID_STATE
-#define UUID_NODEID_NV_STORE		_STDIR"/"UUID_NODEID
-#endif
-
 #define UUIDS_PER_TICK 1024
 #ifdef _MSC_VER
 #define I64(C) C##i64
@@ -134,7 +117,6 @@ typedef struct _uuid_state_t {
 typedef struct _uuid_context_t {
    uuid_state_t state;
    uuid_node_t  nodeid;
-   perl_uuid_time_t  next_save;
 } uuid_context_t;
 
 static void format_uuid_v1(

@@ -89,23 +89,14 @@ WriteMakefile(
 
   CONFIGURE           => sub {
     my %opt;
-    GetOptions(\%opt, 's|state-storage-directory:s',
-        'help|?', 'man') or pod2usage(2);
+    GetOptions(\%opt, 'help|?', 'man') or pod2usage(2);
     pod2usage(1) if $opt{help};
     pod2usage(-verbose => 2) if $opt{man};
 
     print "Configured options (run perl Makefile.PL --help for how to change this):\n";
 
-    my $d = File::Spec->tmpdir;
-    $d = $opt{s} || $d;
-    print "\tUUID state storage: $d\n";
-    $d =~ s/\\/\\\\/g if $^O eq 'MSWin32';
-
-    chmod(0666, sprintf("%s/%s", $d, ".UUID_NODEID"));
-    chmod(0666, sprintf("%s/%s", $d, ".UUID_STATE"));
     return {
-      DEFINE => '-D_STDIR=' . shell_quote(c_quote($d))
-              . ' -D' . shell_quote("__$Config{osname}__")
+      DEFINE => ' -D' . shell_quote("__$Config{osname}__")
            };
   }
 );
@@ -120,10 +111,9 @@ Makefile.PL - configure Makefile for Data::UUID
 
 perl Makefile.PL [options] [EU::MM options]
 
-perl Makefile.PL -s=/var/local/lib/data-uuid
+perl Makefile.PL
 
     Options:
-    --state-storage-directory   directory for storing library state information
     --help                      brief help message
     --man                       full documentation
 
@@ -132,13 +122,6 @@ Options can be abbreviated, see L<Getopt::Long/"Case and abbreviations">.
 =head1 OPTIONS
 
 =over
-
-=item --state-storage-directory
-
-Optional. Takes a string that is interpreted as directory for storing library
-state information. Default is c:/tmp/ on Windows if it already exists, or the
-operating system's temporary directory (see tmpdir in L<File::Spec/"METHODS">),
-or /var/tmp as fallback.
 
 =item --help
 
@@ -152,9 +135,7 @@ Prints the manual page and exits.
 
 =head1 DESCRIPTION
 
-B<Makefile.PL> writes the Makefile for the Data::UUID library. It is configured
-with the options L</"--state-storage-directory">.  Unless given, default values
-are used. In any case the values are printed for confirmation.
+B<Makefile.PL> writes the Makefile for the Data::UUID library.
 
 Additionally, the usual EU::MM options are processed, see
 L<ExtUtils::MakeMaker/"Using Attributes and Parameters">.

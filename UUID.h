@@ -44,10 +44,6 @@
 #include <process.h>
 #endif
 
-#if !defined _STDIR
-#    define  _STDIR			"/var/tmp"
-#endif
-
 #define UUIDS_PER_TICK 1024
 #ifdef _MSC_VER
 #define I64(C) C##i64

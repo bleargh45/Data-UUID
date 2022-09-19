@@ -23,15 +23,6 @@ To install this module type the following:
    make test
    make install
 
-NOTE: This module is designed to save its state information in a permanent 
-storage location. The installation script (i.e. Makefile.PL) prompts for 
-a directory name to use as a storage location for state file and defaults 
-this directory to "/var/tmp" if no directory name is provided. 
-The installation script will not accept names of directories that do not
-exist, however, it will take the locations, which the installing user
-has no write permissions to. In this case, the state information will not be
-saved, which will maximize the chances of generating duplicate UUIDs.
-
 COPYRIGHT AND LICENCE
 
 Copyright (C) 2001, Alexander Golomshtok

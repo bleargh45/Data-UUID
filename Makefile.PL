@@ -89,7 +89,7 @@ WriteMakefile(
 
   CONFIGURE           => sub {
     my %opt;
-    GetOptions(\%opt, 's|state-storage-directory:s', 'd|default-umask:s',
+    GetOptions(\%opt, 's|state-storage-directory:s',
         'help|?', 'man') or pod2usage(2);
     pod2usage(1) if $opt{help};
     pod2usage(-verbose => 2) if $opt{man};
@@ -101,18 +101,11 @@ WriteMakefile(
     print "\tUUID state storage: $d\n";
     $d =~ s/\\/\\\\/g if $^O eq 'MSWin32';
 
-    my $m = '0007';
-    unless ($^O eq 'MSWin32') {
-        $m = $opt{d} || $m;
-        print "\tdefault umask: $m\n";
-    }
-
     chmod(0666, sprintf("%s/%s", $d, ".UUID_NODEID"));
     chmod(0666, sprintf("%s/%s", $d, ".UUID_STATE"));
     return {
       DEFINE => '-D_STDIR=' . shell_quote(c_quote($d))
               . ' -D' . shell_quote("__$Config{osname}__")
-              . ' -D_DEFAULT_UMASK=' . shell_quote($m)
            };
   }
 );
@@ -127,11 +120,10 @@ Makefile.PL - configure Makefile for Data::UUID
 
 perl Makefile.PL [options] [EU::MM options]
 
-perl Makefile.PL -s=/var/local/lib/data-uuid -d=0007
+perl Makefile.PL -s=/var/local/lib/data-uuid
 
     Options:
     --state-storage-directory   directory for storing library state information
-    --default-umask             umask for files in the state storage directory
     --help                      brief help message
     --man                       full documentation
 
@@ -148,11 +140,6 @@ state information. Default is c:/tmp/ on Windows if it already exists, or the
 operating system's temporary directory (see tmpdir in L<File::Spec/"METHODS">),
 or /var/tmp as fallback.
 
-=item --default-umask
-
-Optional. Takes a string that is interpreted as umask for the files in the state
-storage directory. Default is 0007. This is ignored on Windows.
-
 =item --help
 
 Print a brief help message and exits.
@@ -166,9 +153,8 @@ Prints the manual page and exits.
 =head1 DESCRIPTION
 
 B<Makefile.PL> writes the Makefile for the Data::UUID library. It is configured
-with the options L</"--state-storage-directory"> and L</"--default-umask">.
-Unless given, default values are used. In any case the values are printed for
-confirmation.
+with the options L</"--state-storage-directory">.  Unless given, default values
+are used. In any case the values are printed for confirmation.
 
 Additionally, the usual EU::MM options are processed, see
 L<ExtUtils::MakeMaker/"Using Attributes and Parameters">.

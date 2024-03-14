@@ -31,7 +31,7 @@ Data::UUID - Globally/Universally Unique Identifiers (GUIDs/UUIDs)
 The module L<Data::GUID> provides another interface for generating GUIDs.
 Right now, it relies on Data::UUID, but it may not in the future.  Its
 interface may be just a little more straightforward for the average Perl
-programer.
+programmer.
 
 =head1 SYNOPSIS
 

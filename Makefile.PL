@@ -82,8 +82,8 @@ WriteMakefile(
   OBJECT              => '$(O_FILES)', # link all the C files too
   META_MERGE => {
     resources => {
-      bugtracker  => 'https://github.com/rjbs/Data-UUID/issues',
-      repository  => 'https://github.com/rjbs/Data-UUID',
+      bugtracker  => 'https://github.com/bleargh45/Data-UUID/issues',
+      repository  => 'https://github.com/bleargh45/Data-UUID',
     },
 },
 

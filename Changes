@@ -2,6 +2,8 @@ Revision history for Perl extension Data::UUID.
 
 {{$NEXT}}
   - add basic GitHub Actions setup for testing
+  - eliminated use of state/node files in temp directory, addressing
+    CVE-2013-4184.
 
 1.226     2020-04-12
   - set umask before fopen in destructor (thanks, Rafaël Garcia-Suarez)

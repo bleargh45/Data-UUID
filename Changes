@@ -1,5 +1,8 @@
 Revision history for Perl extension Data::UUID.
 
+{{$NEXT}}
+  - add basic GitHub Actions setup for testing
+
 1.226     2020-04-12
   - set umask before fopen in destructor (thanks, Rafaël Garcia-Suarez)
 

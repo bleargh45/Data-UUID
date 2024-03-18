@@ -1,7 +1,9 @@
 Revision history for Perl extension Data::UUID.
 
-{{$NEXT}}
+1.227   2024-03-18
+  - new maintainer, GTERMARS
   - add basic GitHub Actions setup for testing
+  - typo corrections in POD (thanks, Paul Johnson)
   - eliminated use of state/node files in temp directory, addressing
     CVE-2013-4184.
 

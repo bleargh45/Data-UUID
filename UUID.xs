@@ -118,7 +118,10 @@ static unsigned16 true_random(void) {
    if (!inited) {
       get_system_time(&time_now);
       time_now = time_now/UUIDS_PER_TICK;
-      srand((unsigned int)(((time_now >> 32) ^ time_now)&0xffffffff));
+      unsigned int seed = (unsigned int)(((time_now >> 32) ^ time_now)&0xffffffff);
+      pid_t pid = getpid();
+      seed ^= pid;
+      srand(seed);
       inited = 1;
     };
     return (rand());

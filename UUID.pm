@@ -151,8 +151,16 @@ The module allows exporting of several standard namespace UUIDs:
 
 Alexander Golomshtok <agolomsh@cpan.org>
 
+=head1 LICENSE
+
+This software is Copyright (c) 2016 by Alexander Golomshtok.
+
+This is free software, licensed under:
+
+  The (three-clause) BSD License
+
 =head1 SEE ALSO
 
-The Internet Draft "UUIDs and GUIDs" by Paul J. Leach and Rich Salz (RFC 4122)
+The Internet Draft L<"UUIDs and GUIDs"|https://www.ietf.org/rfc/rfc4122.txt> by Paul J. Leach and Rich Salz (RFC 4122)
 
 =cut

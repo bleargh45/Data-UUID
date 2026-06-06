@@ -12,29 +12,27 @@ on:
     - cron: "15 6 * * 0"  # Once weekly, on Sundays
 
 jobs:
+  perl-versions:
+    name: "Retrieve available perl-tester versions"
+    runs-on: ubuntu-latest
+
+    outputs:
+      perl-versions: ${{ steps.action.outputs.perl-versions }}
+
+    steps:
+      - id: action
+        uses: perl-actions/perl-versions@v2
+        with:
+          since-perl: "5.08"
+
   test:
     name: "Linux, Perl v${{ matrix.perl-version }}"
+    needs: perl-versions
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        perl-version:
-          - "latest"
-          - "5.36"
-          - "5.34"
-          - "5.32"
-          - "5.30"
-          - "5.28"
-          - "5.26"
-          - "5.24"
-          - "5.22"
-          - "5.20"
-          - "5.18"
-          - "5.16"
-          - "5.14"
-          - "5.12"
-          - "5.10"
-          - "5.8"
+        perl-version: ${{ fromJson (needs.perl-versions.outputs.perl-versions) }}
 
     container:
       image: perldocker/perl-tester:${{ matrix.perl-version }}

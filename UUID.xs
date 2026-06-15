@@ -225,17 +225,17 @@ static SV* make_ret(const perl_uuid_t u, int type) {
       len = sizeof(perl_uuid_t);
       break;
    case F_STR:
-      sprintf(buf, "%8.8X-%4.4X-%4.4X-%2.2X%2.2X-", (unsigned int)u.time_low, u.time_mid,
+      sprintf(buf, "%8.8x-%4.4x-%4.4x-%2.2x%2.2x-", (unsigned int)u.time_low, u.time_mid,
 	 u.time_hi_and_version, u.clock_seq_hi_and_reserved, u.clock_seq_low);
       for(i = 0; i < 6; i++ ) 
-	 sprintf(buf+strlen(buf), "%2.2X", u.node[i]);
+	 sprintf(buf+strlen(buf), "%2.2x", u.node[i]);
       len = strlen(buf);
       break;
    case F_HEX:
-      sprintf(buf, "0x%8.8X%4.4X%4.4X%2.2X%2.2X", (unsigned int)u.time_low, u.time_mid,
+      sprintf(buf, "0x%8.8x%4.4x%4.4x%2.2x%2.2x", (unsigned int)u.time_low, u.time_mid,
 	 u.time_hi_and_version, u.clock_seq_hi_and_reserved, u.clock_seq_low);
       for(i = 0; i < 6; i++ ) 
-	 sprintf(buf+strlen(buf), "%2.2X", u.node[i]);
+	 sprintf(buf+strlen(buf), "%2.2x", u.node[i]);
       len = strlen(buf);
       break;
    case F_B64:

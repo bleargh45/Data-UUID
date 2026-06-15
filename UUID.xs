@@ -349,10 +349,7 @@ PROTOTYPES: DISABLE
 uuid_context_t*
 new(class)
 PREINIT:
-   FILE          *fd;
    unsigned char  seed[16];
-   perl_uuid_time_t    timestamp;
-   mode_t         mask;
    UV             one = 1;
 CODE:
    RETVAL = (uuid_context_t *)PerlMemShared_malloc(sizeof(uuid_context_t));
@@ -382,8 +379,6 @@ PREINIT:
    perl_uuid_time_t  timestamp;
    unsigned16   clockseq;
    perl_uuid_t       uuid;
-   FILE        *fd;
-   mode_t       mask;
 PPCODE:
    clockseq = self->state.cs;
    get_current_time(&timestamp);
@@ -545,8 +540,6 @@ PREINIT:
 #if DU_THREADSAFE
    UV            count;
 #endif
-   FILE           *fd;
-   mode_t         mask;
 CODE:
 #if DU_THREADSAFE
    MUTEX_LOCK(&instances_mutex);
